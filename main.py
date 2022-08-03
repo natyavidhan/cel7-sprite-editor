@@ -102,11 +102,14 @@ class App:
         text_box = tk.Text(second_window, bg='#ffffff', fg='#000000', font=('Arial', 12))
         text_box.place(x=25, y=25, width=400, height=200)
         art = ""
+        text = "Art:\n"
         for y in range(7):
             for x in range(7):
                 art += str(self.art[y][x]) + " "
             art += '\n'
-        text_box.insert(tk.END, art)
+        text += art
+        text += "\nColor: " + str(self.color)
+        text_box.insert(tk.END, text)
         text_box.configure(state='disabled')
         button = tk.Button(second_window, text='Copy to Clipboard', command=lambda: self.copy_to_clip(art))
         button.place(x=165, y=250, width=150, height=25)
