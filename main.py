@@ -24,6 +24,12 @@ class App:
 
         self.draw_pallet()
         self.draw_art_canvas()
+    
+    def translate(self, value, leftMin, leftMax, rightMin, rightMax):
+        leftSpan = leftMax - leftMin
+        rightSpan = rightMax - rightMin
+        valueScaled = float(value - leftMin) / float(leftSpan)
+        return rightMin + (valueScaled * rightSpan)
 
     def draw_pallet(self):
         for y in range(0, 100, 50):
@@ -57,7 +63,19 @@ class App:
         else:
             self.art[y][x] = 0
         self.draw_art_canvas()
+        self.draw_preview()
 
+    def draw_preview(self):
+        width = self.translate(1, 0, 7, 0, 100)
+        for y in range(7):
+            for x in range(7):
+                x_ = self.translate(x, 0, 7, 0, 100)
+                y_ = self.translate(y, 0, 7, 0, 100)
+                if self.art[y][x] == 1:
+                    self.preview_canvas.create_rectangle(x_, y_, x_+width, y_+width, fill="#191919")
+                else:
+                    self.preview_canvas.create_rectangle(x_, y_, x_+width, y_+width, fill="#ffffff")
+                self.preview_canvas.create_rectangle(x_, y_, x_+width, y_+width, outline="#ffffff", width=0.5)
 
 if __name__ == '__main__':
     root = tk.Tk()
