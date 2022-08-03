@@ -1,0 +1,23 @@
+(= title "Test Scene")
+(= width 16)
+(= height 16)
+(= debug nil)
+
+(loadSprites '(
+    ;a
+0 1 1 1 1 1 0 
+1 1 1 1 1 1 1 
+1 0 1 1 1 0 1 
+1 1 1 1 1 1 1 
+1 0 1 1 1 0 1 
+1 1 0 0 0 1 1 
+0 1 1 1 1 1 0 
+
+))
+
+(= step (fn ()
+    (fill 0 0 width height " ")
+
+    (color 4)
+    (put 0 0 "a")
+))
