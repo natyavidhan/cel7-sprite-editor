@@ -9,6 +9,7 @@ class App:
         self.root.configure(background='#505050')
         self.colors = ["#000000", "#F7F7E7", "#F70C67", "#FD9819", "#E7D50D", "#A1E119", "#44BCFF", "#AA8BFF", "#F9ACB0",
                         "#AD3045", "#34956E", "#254469", "#7D8E9A", "#C3BFAF", "#76725E", "#3C3B2E"]
+        self.art = [[0 for x in range(7)] for y in range(7)]
         
         self.color = 0
         self.pallet_canvas = tk.Canvas(self.root, bg='#ffffff')
@@ -16,6 +17,7 @@ class App:
 
         self.art_canvas = tk.Canvas(self.root, bg='#ffffff')
         self.art_canvas.place(x=65, y=135, width=420, height=420)
+        self.art_canvas.bind('<Button-1>', self.draw)
 
         self.preview_canvas = tk.Canvas(self.root, bg='#ffffff')
         self.preview_canvas.place(x=440, y=25, width=100, height=100)
@@ -36,12 +38,25 @@ class App:
     def set_color(self, event):
         self.color = int(event.x/50) + int(event.y/50)*8
         self.draw_pallet()
-        print(self.color)
 
     def draw_art_canvas(self):
         for y in range(7):
             for x in range(7):
-                self.art_canvas.create_rectangle(x*60, y*60, x*60+60, y*60+60, outline="#000000", width=1)
+                if self.art[y][x] == 1:
+                    self.art_canvas.create_rectangle(x*60+1, y*60+1, x*60+60, y*60+60, fill="#191919")
+                else:
+                    self.art_canvas.create_rectangle(x*60+1, y*60+1, x*60+60, y*60+60, fill="#ffffff")
+                self.art_canvas.create_rectangle(x*60, y*60, x*60+60, y*60+60, outline="#000000", width=0.5)
+    
+    def draw(self, event):
+        x = int(event.x/60)
+        y = int(event.y/60)
+        current = self.art[y][x]
+        if current == 0:
+            self.art[y][x] = 1
+        else:
+            self.art[y][x] = 0
+        self.draw_art_canvas()
 
 
 if __name__ == '__main__':
